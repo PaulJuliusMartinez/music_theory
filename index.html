@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns = "http://www.w3.org/1999/xhtml">
+  <head>
+  </head>
+<body>
+<script type="text/javascript">
+
+var correct = 0;
+var total = 0;
+var notes = ["C3", "Db3", "D3", "Eb3", "E3", "F3", "Gb3", "G3", "Ab3", "A3", "Bb3", "B3", 
+             "C4", "Db4", "D4", "Eb4", "E4", "F4", "Gb4", "G4", "Ab4", "A4", "Bb4", "B4", 
+             "C5", "Db5", "D5", "Eb5", "E5", "F5", "Gb5", "G5"]; //, "Ab5", "A5", "Bb5", "B5", "C6"];
+var intervals = ["Unison", "m2", "M2", "m3", "M3", "P4", "A4/D5/Tritone", "P5", "m6", "M6", "m7", "M7", "P8"];
+
+var chords = [
+  { title: "Major Root Position", intervals: [4, 7] },
+  { title: "Minor Root Position", intervals: [3, 7] },
+  { title: "Major 1st Position (M6)", intervals: [3, 8] },
+  { title: "Minor 1st Position (m6)", intervals: [4, 9] },
+  { title: "Major 2nd Position (M6/4)", intervals: [5, 9] },
+  { title: "Major 2nd Position (M6/4)", intervals: [5, 8] },
+  { title: "Augmented", intervals: [4, 8] },
+//  { title: "Dominant 7th Root Position V7", intervals: [4, 7, 10] },
+//  { title: "Dominant 7th 1st Position (V6/5)", intervals: [3, 6, 8] },
+//  { title: "Dominant 7th 2nd Position (V4/3)", intervals: [3, 5, 9] },
+//  { title: "Dominant 7th 3rd Position (V4/2)", intervals: [2, 6, 9] },
+  { title: "Diminished 2nd Position (dim6)", intervals: [3, 9] }
+];
+
+
+function resetStats() {
+  correct = -1;
+  total = -1;
+  markCorrect();
+};
+
+function markCorrect() {
+  correct++;
+  total++;
+  document.getElementById('correct').innerHTML = correct;
+  document.getElementById('total').innerHTML = total;
+};
+
+function markIncorrect() {
+  total++;
+  document.getElementById('total').innerHTML = total;
+};
+
+function showAnswer() {
+  document.getElementById('answer').style.display = '';
+};
+
+function hideAnswer() {
+  document.getElementById('answer').style.display = 'none';
+};
+
+var lastIntervalStart = 0;
+var lastIntervalWidth = 7;
+
+function playRandomInterval() {
+  hideAnswer();
+  lastIntervalWidth = Math.floor(Math.random() * 12) + 1;
+  lastIntervalStart = Math.floor(Math.random() * (notes.length - lastIntervalWidth));
+  playLastInterval();
+};
+
+function playLastInterval() {
+  playInterval(lastIntervalStart, lastIntervalWidth);
+};
+
+function playInterval(start, interval) {
+  stopEverything();
+//  alert("Start: " + start + ", Interval: " + interval);
+//  alert("Start: " + notes[start] + ", Interval: " + intervals[interval]);
+  playNote(start);
+  playNote(start + interval);
+  document.getElementById('answer').innerHTML = intervals[interval] + ' starting on ' + notes[start];
+};
+
+var lastChordStart = 0;
+var lastChord = chords[0];
+
+function playRandomChord() {
+  hideAnswer();
+  lastChord = chords[Math.floor(Math.random() * chords.length)];
+  var largestInterval = lastChord.intervals[lastChord.intervals.length - 1];
+  lastChordStart = Math.floor(Math.random() * (notes.length - largestInterval));
+  playLastChord();
+};
+
+function playLastChord() {
+  playChord(lastChordStart, lastChord);
+};
+
+function playChord(start, chord) {
+  stopEverything();
+//  alert("Start: " + notes[start] + ", Chord: " + chord.title);
+  playNote(start);
+  for (var i = 0; i < chord.intervals.length; i++) {
+    playNote(start + chord.intervals[i]);
+  }
+  document.getElementById('answer').innerHTML = chord.title + ' starting on ' + notes[start];
+};
+
+function playNote(note) {
+  document.getElementById(notes[note]).play();
+};
+
+function stopEverything() {
+  var audioClips = document.getElementsByTagName('audio');
+  for (var i = 0; i < audioClips.length; i++) {
+    audioClips[i].pause();
+    audioClips[i].currentTime = 0;
+  }
+};
+
+</script>
+
+<div id="score">
+  Correct: <span id="correct">0</span>
+  <p/>
+  Total: <span id="total">0</span>
+  <p/>
+  <input onclick="resetStats()" type="submit" value="Reset">
+</div>
+
+<p/>
+<input onclick="playRandomInterval()" type="submit" value="Play Interval">
+<input onclick="playLastInterval()" type="submit" value="Again">
+<p/>
+<input onclick="playRandomChord()" type="submit" value="Play Chord">
+<input onclick="playLastChord()" type="submit" value="Again">
+<p/>
+<input onclick="markCorrect()" type="submit" value="Correct">
+<input onclick="markIncorrect()" type="submit" value="Incorrect">
+<p/>
+<p/>
+<input onclick="showAnswer()" type="submit" value="Show Answer">
+<div>
+  Answer: <span id="answer" style="display: none;"></span>
+</div>
+
+<audio id="C3" src="../piano_notes/C3_trimmed.mp3"></audio>
+<audio id="Db3" src="../piano_notes/Db3_trimmed.mp3"></audio>
+<audio id="D3" src="../piano_notes/D3_trimmed.mp3"></audio>
+<audio id="Eb3" src="../piano_notes/Eb3_trimmed.mp3"></audio>
+<audio id="E3" src="../piano_notes/E3_trimmed.mp3"></audio>
+<audio id="F3" src="../piano_notes/F3_trimmed.mp3"></audio>
+<audio id="Gb3" src="../piano_notes/Gb3_trimmed.mp3"></audio>
+<audio id="G3" src="../piano_notes/G3_trimmed.mp3"></audio>
+<audio id="Ab3" src="../piano_notes/Ab3_trimmed.mp3"></audio>
+<audio id="A3" src="../piano_notes/A3_trimmed.mp3"></audio>
+<audio id="Bb3" src="../piano_notes/Bb3_trimmed.mp3"></audio>
+<audio id="B3" src="../piano_notes/B3_trimmed.mp3"></audio>
+<audio id="C4" src="../piano_notes/C4_trimmed.mp3"></audio>
+<audio id="Db4" src="../piano_notes/Db4_trimmed.mp3"></audio>
+<audio id="D4" src="../piano_notes/D4_trimmed.mp3"></audio>
+<audio id="Eb4" src="../piano_notes/Eb4_trimmed.mp3"></audio>
+<audio id="E4" src="../piano_notes/E4_trimmed.mp3"></audio>
+<audio id="F4" src="../piano_notes/F4_trimmed.mp3"></audio>
+<audio id="Gb4" src="../piano_notes/Gb4_trimmed.mp3"></audio>
+<audio id="G4" src="../piano_notes/G4_trimmed.mp3"></audio>
+<audio id="Ab4" src="../piano_notes/Ab4_trimmed.mp3"></audio>
+<audio id="A4" src="../piano_notes/A4_trimmed.mp3"></audio>
+<audio id="Bb4" src="../piano_notes/Bb4_trimmed.mp3"></audio>
+<audio id="B4" src="../piano_notes/B4_trimmed.mp3"></audio>
+<audio id="C5" src="../piano_notes/C5_trimmed.mp3"></audio>
+<audio id="Db5" src="../piano_notes/Db5_trimmed.mp3"></audio>
+<audio id="D5" src="../piano_notes/D5_trimmed.mp3"></audio>
+<audio id="Eb5" src="../piano_notes/Eb5_trimmed.mp3"></audio>
+<audio id="E5" src="../piano_notes/E5_trimmed.mp3"></audio>
+<audio id="F5" src="../piano_notes/F5_trimmed.mp3"></audio>
+<audio id="Gb5" src="../piano_notes/Gb5_trimmed.mp3"></audio>
+<audio id="G5" src="../piano_notes/G5_trimmed.mp3"></audio>
+<audio id="Ab5" src="../piano_notes/Ab5_trimmed.mp3"></audio>
+<audio id="A5" src="../piano_notes/A5_trimmed.mp3"></audio>
+<audio id="Bb5" src="../piano_notes/Bb5_trimmed.mp3"></audio>
+<audio id="B5" src="../piano_notes/B5_trimmed.mp3"></audio>
+<audio id="C6" src="../piano_notes/C6_trimmed.mp3"></audio>
+
+</body>
+</html>
