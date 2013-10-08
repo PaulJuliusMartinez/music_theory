@@ -18,7 +18,7 @@ var chords = [
   { title: "Major 1st Position (M6)", intervals: [3, 8] },
   { title: "Minor 1st Position (m6)", intervals: [4, 9] },
   { title: "Major 2nd Position (M6/4)", intervals: [5, 9] },
-  { title: "Major 2nd Position (M6/4)", intervals: [5, 8] },
+  { title: "Minor 2nd Position (M6/4)", intervals: [5, 8] },
   { title: "Augmented", intervals: [4, 8] },
 //  { title: "Dominant 7th Root Position V7", intervals: [4, 7, 10] },
 //  { title: "Dominant 7th 1st Position (V6/5)", intervals: [3, 6, 8] },
@@ -39,19 +39,21 @@ function markCorrect() {
   total++;
   document.getElementById('correct').innerHTML = correct;
   document.getElementById('total').innerHTML = total;
+  hideAnswer();
 };
 
 function markIncorrect() {
   total++;
   document.getElementById('total').innerHTML = total;
+  hideAnswer();
 };
 
 function showAnswer() {
-  document.getElementById('answer').style.display = '';
+  document.getElementById('answer_area').style.display = '';
 };
 
 function hideAnswer() {
-  document.getElementById('answer').style.display = 'none';
+  document.getElementById('answer_area').style.display = 'none';
 };
 
 var lastIntervalStart = 0;
@@ -131,13 +133,13 @@ function stopEverything() {
 <input onclick="playRandomChord()" type="submit" value="Play Chord">
 <input onclick="playLastChord()" type="submit" value="Again">
 <p/>
-<input onclick="markCorrect()" type="submit" value="Correct">
-<input onclick="markIncorrect()" type="submit" value="Incorrect">
-<p/>
-<p/>
 <input onclick="showAnswer()" type="submit" value="Show Answer">
-<div>
-  Answer: <span id="answer" style="display: none;"></span>
+<div id="answer_area" style="display: none;">
+  Answer: <span id="answer"></span>
+  <p/>
+  <input onclick="markCorrect()" type="submit" value="Correct">
+  <input onclick="markIncorrect()" type="submit" value="Incorrect">
+  <p/>
 </div>
 
 <audio id="C3" src="./piano_notes/C3_trimmed.mp3"></audio>
