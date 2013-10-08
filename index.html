@@ -39,19 +39,21 @@ function markCorrect() {
   total++;
   document.getElementById('correct').innerHTML = correct;
   document.getElementById('total').innerHTML = total;
+  hideAnswer();
 };
 
 function markIncorrect() {
   total++;
   document.getElementById('total').innerHTML = total;
+  hideAnswer();
 };
 
 function showAnswer() {
-  document.getElementById('answer').style.display = '';
+  document.getElementById('answer_area').style.display = '';
 };
 
 function hideAnswer() {
-  document.getElementById('answer').style.display = 'none';
+  document.getElementById('answer_area').style.display = 'none';
 };
 
 var lastIntervalStart = 0;
@@ -131,13 +133,13 @@ function stopEverything() {
 <input onclick="playRandomChord()" type="submit" value="Play Chord">
 <input onclick="playLastChord()" type="submit" value="Again">
 <p/>
-<input onclick="markCorrect()" type="submit" value="Correct">
-<input onclick="markIncorrect()" type="submit" value="Incorrect">
-<p/>
-<p/>
 <input onclick="showAnswer()" type="submit" value="Show Answer">
-<div>
-  Answer: <span id="answer" style="display: none;"></span>
+<div id="answer_area" style="display: none;">
+  Answer: <span id="answer"></span>
+  <p/>
+  <input onclick="markCorrect()" type="submit" value="Correct">
+  <input onclick="markIncorrect()" type="submit" value="Incorrect">
+  <p/>
 </div>
 
 <audio id="C3" src="./piano_notes/C3_trimmed.mp3"></audio>
