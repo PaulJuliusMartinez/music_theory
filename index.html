@@ -20,11 +20,11 @@ var chords = [
   { title: "Major 2nd Position (M6/4)", intervals: [5, 9] },
   { title: "Minor 2nd Position (M6/4)", intervals: [5, 8] },
   { title: "Augmented", intervals: [4, 8] },
+  { title: "Diminished 2nd Position (dim6)", intervals: [3, 9] }
 //  { title: "Dominant 7th Root Position V7", intervals: [4, 7, 10] },
 //  { title: "Dominant 7th 1st Position (V6/5)", intervals: [3, 6, 8] },
 //  { title: "Dominant 7th 2nd Position (V4/3)", intervals: [3, 5, 9] },
 //  { title: "Dominant 7th 3rd Position (V4/2)", intervals: [2, 6, 9] },
-  { title: "Diminished 2nd Position (dim6)", intervals: [3, 9] }
 ];
 
 
@@ -105,6 +105,8 @@ function playChord(start, chord) {
 };
 
 function playNote(note) {
+  document.getElementById(notes[note]).pause();
+  document.getElementById(notes[note]).currentTime = 0;
   document.getElementById(notes[note]).play();
 };
 
@@ -112,7 +114,7 @@ function stopEverything() {
   var audioClips = document.getElementsByTagName('audio');
   for (var i = 0; i < audioClips.length; i++) {
     audioClips[i].pause();
-    audioClips[i].currentTime = 0;
+    //audioClips[i].currentTime = 0;
   }
 };
 
@@ -141,6 +143,33 @@ function stopEverything() {
   <input onclick="markIncorrect()" type="submit" value="Incorrect">
   <p/>
 </div>
+<p/>
+<div>
+  Play intervals and chords on top of the last bass note you heard. (If it's too high, it might not work.)
+  <p/>
+  <input onclick="playInterval(lastIntervalStart, 1)" type="submit" value="m2">
+  <input onclick="playInterval(lastIntervalStart, 2)" type="submit" value="M2">
+  <input onclick="playInterval(lastIntervalStart, 3)" type="submit" value="m3">
+  <input onclick="playInterval(lastIntervalStart, 4)" type="submit" value="M3">
+  <input onclick="playInterval(lastIntervalStart, 5)" type="submit" value="P4">
+  <input onclick="playInterval(lastIntervalStart, 6)" type="submit" value="A4/D5/TT">
+  <input onclick="playInterval(lastIntervalStart, 7)" type="submit" value="P5">
+  <input onclick="playInterval(lastIntervalStart, 8)" type="submit" value="m6">
+  <input onclick="playInterval(lastIntervalStart, 9)" type="submit" value="M6">
+  <input onclick="playInterval(lastIntervalStart, 10)" type="submit" value="m7">
+  <input onclick="playInterval(lastIntervalStart, 11)" type="submit" value="M7">
+  <input onclick="playInterval(lastIntervalStart, 12)" type="submit" value="Octave">
+  <p/>
+  <input onclick="playChord(lastChordStart, chords[0])" type="submit" value="Major Root">
+  <input onclick="playChord(lastChordStart, chords[1])" type="submit" value="Minor Root">
+  <input onclick="playChord(lastChordStart, chords[2])" type="submit" value="Major 1st Position (M6)">
+  <input onclick="playChord(lastChordStart, chords[3])" type="submit" value="Minor 1st Position (m6)">
+  <input onclick="playChord(lastChordStart, chords[4])" type="submit" value="Major 2nd Position (M6/4)">
+  <input onclick="playChord(lastChordStart, chords[5])" type="submit" value="Minor 2nd Position (m6/4)">
+  <input onclick="playChord(lastChordStart, chords[6])" type="submit" value="Augmented (5+)">
+  <input onclick="playChord(lastChordStart, chords[7])" type="submit" value="Diminished (dim6)">
+</div>
+
 
 <audio id="C3" src="./piano_notes/C3_trimmed.mp3"></audio>
 <audio id="Db3" src="./piano_notes/Db3_trimmed.mp3"></audio>
