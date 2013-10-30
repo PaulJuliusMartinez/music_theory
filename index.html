@@ -7,24 +7,24 @@
 
 var correct = 0;
 var total = 0;
-var notes = ["C3", "Db3", "D3", "Eb3", "E3", "F3", "Gb3", "G3", "Ab3", "A3", "Bb3", "B3", 
-             "C4", "Db4", "D4", "Eb4", "E4", "F4", "Gb4", "G4", "Ab4", "A4", "Bb4", "B4", 
+var notes = ["C3", "Db3", "D3", "Eb3", "E3", "F3", "Gb3", "G3", "Ab3", "A3", "Bb3", "B3",
+             "C4", "Db4", "D4", "Eb4", "E4", "F4", "Gb4", "G4", "Ab4", "A4", "Bb4", "B4",
              "C5", "Db5", "D5", "Eb5", "E5", "F5", "Gb5", "G5"]; //, "Ab5", "A5", "Bb5", "B5", "C6"];
 var intervals = ["Unison", "m2", "M2", "m3", "M3", "P4", "A4/D5/Tritone", "P5", "m6", "M6", "m7", "M7", "P8"];
 
 var chords = [
   { title: "Major Root Position", intervals: [4, 7] },
   { title: "Minor Root Position", intervals: [3, 7] },
-  { title: "Major 1st Position (M6)", intervals: [3, 8] },
-  { title: "Minor 1st Position (m6)", intervals: [4, 9] },
-  { title: "Major 2nd Position (M6/4)", intervals: [5, 9] },
-  { title: "Minor 2nd Position (M6/4)", intervals: [5, 8] },
+  { title: "Major 1st Inversion (M6)", intervals: [3, 8] },
+  { title: "Minor 1st Inversion (m6)", intervals: [4, 9] },
+  { title: "Major 2nd Inversion (M6/4)", intervals: [5, 9] },
+  { title: "Minor 2nd Inversion (m6/4)", intervals: [5, 8] },
   { title: "Augmented", intervals: [4, 8] },
-  { title: "Diminished 2nd Position (dim6)", intervals: [3, 9] }
-//  { title: "Dominant 7th Root Position V7", intervals: [4, 7, 10] },
-//  { title: "Dominant 7th 1st Position (V6/5)", intervals: [3, 6, 8] },
-//  { title: "Dominant 7th 2nd Position (V4/3)", intervals: [3, 5, 9] },
-//  { title: "Dominant 7th 3rd Position (V4/2)", intervals: [2, 6, 9] },
+  { title: "Diminished 1st Inversion (dim6)", intervals: [3, 9] },
+  { title: "Dominant 7th Root Position V7", intervals: [4, 7, 10] },
+  { title: "Dominant 7th 1st Inversion (V6/5)", intervals: [3, 6, 8] },
+  { title: "Dominant 7th 2nd Inversion (V4/3)", intervals: [3, 5, 9] },
+  { title: "Dominant 7th 3rd Inversion (V4/2)", intervals: [2, 6, 9] }
 ];
 
 
@@ -148,26 +148,36 @@ function stopEverything() {
   Play intervals and chords on top of the last bass note you heard. (If it's too high, it might not work.)
   <p/>
   <input onclick="playInterval(lastIntervalStart, 1)" type="submit" value="m2">
-  <input onclick="playInterval(lastIntervalStart, 2)" type="submit" value="M2">
   <input onclick="playInterval(lastIntervalStart, 3)" type="submit" value="m3">
-  <input onclick="playInterval(lastIntervalStart, 4)" type="submit" value="M3">
-  <input onclick="playInterval(lastIntervalStart, 5)" type="submit" value="P4">
-  <input onclick="playInterval(lastIntervalStart, 6)" type="submit" value="A4/D5/TT">
-  <input onclick="playInterval(lastIntervalStart, 7)" type="submit" value="P5">
   <input onclick="playInterval(lastIntervalStart, 8)" type="submit" value="m6">
-  <input onclick="playInterval(lastIntervalStart, 9)" type="submit" value="M6">
   <input onclick="playInterval(lastIntervalStart, 10)" type="submit" value="m7">
+  <br/>
+  <input onclick="playInterval(lastIntervalStart, 2)" type="submit" value="M2">
+  <input onclick="playInterval(lastIntervalStart, 4)" type="submit" value="M3">
+  <input onclick="playInterval(lastIntervalStart, 9)" type="submit" value="M6">
   <input onclick="playInterval(lastIntervalStart, 11)" type="submit" value="M7">
+  <br/>
+  <input onclick="playInterval(lastIntervalStart, 5)" type="submit" value="P4">
+  <input onclick="playInterval(lastIntervalStart, 7)" type="submit" value="P5">
   <input onclick="playInterval(lastIntervalStart, 12)" type="submit" value="Octave">
+  <br/>
+  <input onclick="playInterval(lastIntervalStart, 6)" type="submit" value="A4/D5/TT">
   <p/>
   <input onclick="playChord(lastChordStart, chords[0])" type="submit" value="Major Root">
+  <input onclick="playChord(lastChordStart, chords[2])" type="submit" value="Major 1st Inversion (M6)">
+  <input onclick="playChord(lastChordStart, chords[4])" type="submit" value="Major 2nd Inversion (M6/4)">
+  <br/>
   <input onclick="playChord(lastChordStart, chords[1])" type="submit" value="Minor Root">
-  <input onclick="playChord(lastChordStart, chords[2])" type="submit" value="Major 1st Position (M6)">
-  <input onclick="playChord(lastChordStart, chords[3])" type="submit" value="Minor 1st Position (m6)">
-  <input onclick="playChord(lastChordStart, chords[4])" type="submit" value="Major 2nd Position (M6/4)">
-  <input onclick="playChord(lastChordStart, chords[5])" type="submit" value="Minor 2nd Position (m6/4)">
+  <input onclick="playChord(lastChordStart, chords[3])" type="submit" value="Minor 1st Inversion (m6)">
+  <input onclick="playChord(lastChordStart, chords[5])" type="submit" value="Minor 2nd Inversion (m6/4)">
+  <br/>
   <input onclick="playChord(lastChordStart, chords[6])" type="submit" value="Augmented (5+)">
-  <input onclick="playChord(lastChordStart, chords[7])" type="submit" value="Diminished (dim6)">
+  <input onclick="playChord(lastChordStart, chords[7])" type="submit" value="Diminished 1st inverstion (dim6)">
+  <br/>
+  <input onclick="playChord(lastChordStart, chords[8])" type="submit" value="Dominant 7th (V7)">
+  <input onclick="playChord(lastChordStart, chords[9])" type="submit" value="Dominant 7th 1st Inversion (V6/5)">
+  <input onclick="playChord(lastChordStart, chords[10])" type="submit" value="Dominant 7th 2nd Inversion (V4/3)">
+  <input onclick="playChord(lastChordStart, chords[11])" type="submit" value="Dominant 7th 3rd Inversion (V4/2)">
 </div>
 
 
