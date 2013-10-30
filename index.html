@@ -11,6 +11,8 @@ var notes = ["C3", "Db3", "D3", "Eb3", "E3", "F3", "Gb3", "G3", "Ab3", "A3", "Bb
              "C4", "Db4", "D4", "Eb4", "E4", "F4", "Gb4", "G4", "Ab4", "A4", "Bb4", "B4", 
              "C5", "Db5", "D5", "Eb5", "E5", "F5", "Gb5", "G5"]; //, "Ab5", "A5", "Bb5", "B5", "C6"];
 var intervals = ["Unison", "m2", "M2", "m3", "M3", "P4", "A4/D5/Tritone", "P5", "m6", "M6", "m7", "M7", "P8"];
+var majorResolutions = [0, -1, 2, 0, -1, 4, 0, -1, 5, 7, 0, -1, 7, 0, -1, 9, 7, 0, -1, 11, 12, -1];
+var minorResolutions = [0, -1, 2, 0, -1, 3, 0, -1, 5, 7, 0, -1, 7, 0, -1, 8, 7, 0, -1, 10, 12, -1];
 
 var chords = [
   { title: "Major Root Position", intervals: [4, 7] },
@@ -118,7 +120,30 @@ function stopEverything() {
   }
 };
 
+function playMajorResolutions() {
+  playNotesOnLoop(majorResolutions);
+};
+
+function playMinorResolutions() {
+  playNotesOnLoop(minorResolutions);
+};
+
+function playNotesOnLoop(notes) {
+  var randomStart = 8 + Math.floor(Math.random() * 10);
+  var i = 0;
+  setInterval(function() {
+    if (notes[i] != -1) {
+      stopEverything();
+      playNote(randomStart + notes[i]);
+    }
+    i = (i == notes.length - 1) ? 0 : i + 1;
+  }, 800);
+};
+
+
 </script>
+<input onclick="playMajorResolutions()" type="submit" value="Major resolutions">
+<input onclick="playMinorResolutions()" type="submit" value="Minor resolutions">
 
 <div id="score">
   Correct: <span id="correct">0</span>
